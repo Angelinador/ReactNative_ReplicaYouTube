@@ -1,5 +1,4 @@
-import React, { useContext, useState } from "react";
-import { useTheme } from "../contexts/theme.context";
+import React, { useState } from "react";
 import { loginScreenStyles as styles } from "../styles/login.styles";
 import { validateLogin } from "../utils/validators.util";
 import {
@@ -9,23 +8,22 @@ import {
   TouchableOpacity,
   Pressable,
 } from "react-native";
-
-import { useNavigation } from "@react-navigation/native";
-/* contiene los hooks useNavigation & useRoute, crea el stack y el historial de pantallas */
 import { StackNavigationProp } from "@react-navigation/stack";
-/* 
-  Libreria para crear los Stack Navigators las cuales funcionan como "un monton de pantallas apiladas" 
-  > Define las pantallas como rutas ("Login", "Profile", etc.)
-  > Cuando navegamos a una nueva pantalla se apila arriba de la anterior
-  > Tambien se encarga de las animaciones de transicion entre pantallas
-*/
 import { RootStackParamList } from "../types/navigation";
 
-type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, "Login">;
+import { useNavigation } from "@react-navigation/native";
+import { useTheme } from "../contexts/theme.context";
+import { useAuth } from "../contexts/auth.context";
+
+type LoginScreenNavigationProp = StackNavigationProp<
+  RootStackParamList,
+  "Login"
+>;
 
 const LoginScreen = () => {
   const navigation = useNavigation<LoginScreenNavigationProp>();
-  const { theme } = useTheme();
+  const { theme } = useTheme()
+  const { loading, login } = useAuth()
 
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [email, setEmail] = useState("");
@@ -35,10 +33,14 @@ const LoginScreen = () => {
   const handleLoginPress = async () => {
     const error = validateLogin(email, password);
     if (!error) {
-      navigation.navigate("Home");
+      try {
+        await login(email, password);
+        navigation.navigate("Home"); 
+      } catch (e: any) {
+        setErrorMessage(e.message);
+      }
     } else {
       setErrorMessage(error);
-      return;
     }
   };
 
@@ -58,8 +60,8 @@ const LoginScreen = () => {
       </Text>
       <TextInput
         placeholder="nombre@email.com"
-        placeholderTextColor="#999"
-        style={[styles.input, { color: theme.textInverse }]}
+        placeholderTextColor={theme.subtitle}
+        style={[styles.input, { color: theme.text }]}
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
@@ -67,32 +69,27 @@ const LoginScreen = () => {
       />
 
       {/* contraseña */}
-      <Text style={[styles.label, { color: theme.text }]}>
-        Contraseña
-      </Text>
+      <Text style={[styles.label, { color: theme.text }]}>Contraseña</Text>
       <View style={styles.passwordContainer}>
-
         <TextInput
           placeholder="Ingresa tu contraseña"
-          placeholderTextColor="#999"
+          placeholderTextColor={theme.subtitle}
           secureTextEntry={!passwordVisible}
-          style={[styles.passwordInput, { color: theme.textInverse }]}
+          style={[styles.passwordInput, { color: theme.text }]}
           value={password}
           onChangeText={setPassword}
         />
 
         <TouchableOpacity
           onPress={() => {
-            console.log("toggle pressed - current:", passwordVisible);
-            setPasswordVisible(prev => !prev);
+            setPasswordVisible((prev) => !prev);
           }}
         >
-          <Text style={{ color: theme.primary }}>
+          <Text style={{ color: theme.text, fontSize: 18 }}>
             {passwordVisible ? "🙈" : "👁️"}
           </Text>
         </TouchableOpacity>
       </View>
-
 
       {/* posible mensaje de error */}
       {errorMessage ? (
@@ -101,14 +98,19 @@ const LoginScreen = () => {
 
       {/* contraseña olvidada */}
       <TouchableOpacity>
-        <Text style={[styles.forgotText, { color: theme.primary }]}>¿Olvidaste tu contraseña?</Text>
+        <Text style={[styles.forgotText, { color: theme.primary }]}>
+          ¿Olvidaste tu contraseña?
+        </Text>
       </TouchableOpacity>
 
       {/* boton para iniciar */}
       <TouchableOpacity
         style={[styles.button, { backgroundColor: theme.primary }]}
-        onPress={() => { }}>
-        <Text style={styles.buttonText}>Iniciar</Text>
+        onPress={handleLoginPress}
+      >
+        <Text style={styles.buttonText}>
+          {loading ? "Cargando..." : "Iniciar sesión"}
+        </Text>
       </TouchableOpacity>
 
       <View
@@ -118,9 +120,9 @@ const LoginScreen = () => {
           marginVertical: 40,
         }}
       >
-        <View style={{ flex: 1, height: 1, backgroundColor: "#ccc" }} />
-        <Text style={{ marginHorizontal: 10, color: theme.text }}>o</Text>
-        <View style={{ flex: 1, height: 1, backgroundColor: "#ccc" }} />
+        <View style={{ flex: 1, height: 1, backgroundColor: theme.text }} />
+        <Text style={{ marginHorizontal: 10, color: "#000" }}>o</Text>
+        <View style={{ flex: 1, height: 1, backgroundColor: theme.text }} />
       </View>
 
       {/* boton de google */}
@@ -131,7 +133,11 @@ const LoginScreen = () => {
       {/* registro */}
       <View style={styles.footerContainer}>
         <Text style={{ color: theme.text }}>Nuevo en la app?</Text>
-        <TouchableOpacity onPress={() => navigation.navigate("Register")}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("Register");
+          }}
+        >
           <Text style={{ color: theme.primary }}>Regístrate</Text>
         </TouchableOpacity>
       </View>

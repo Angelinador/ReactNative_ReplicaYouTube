@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { MaterialIcons } from "@expo/vector-icons"; // si usamos expo necesitamos esta libreria para los iconos
+import { MaterialIcons } from "@expo/vector-icons"; // libreria de icono en expo
 import HomeScreen from "../screens/home.screen";
 import RecordScreen from "../screens/record.screen";
 import SettingsScreen from "../screens/settings.screen";

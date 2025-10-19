@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, ReactNode, JSX } from "react";
+import React, { createContext, useState, useContext, ReactNode } from "react";
 import { Theme } from "../types/theme.interface";
 import { lightTheme, darkTheme } from "../styles/theme.styles";
 
@@ -20,7 +20,7 @@ interface ThemeProviderProps {
   children: ReactNode;
 }
 
-export const ThemeProvider = ({ children }: ThemeProviderProps): JSX.Element => {
+export const ThemeProvider = ({ children }: ThemeProviderProps): React.JSX.Element => {
   const [isDark, setIsDark] = useState(false);
   const toggleTheme = () => setIsDark((prev) => !prev);
   const theme: Theme = isDark ? darkTheme : lightTheme;
