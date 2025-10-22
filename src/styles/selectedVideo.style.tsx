@@ -11,6 +11,11 @@ export const selectedVideoStyle = StyleSheet.create({
     backgroundColor: "#000",
   },
 
+  video: {
+
+    height: "100%"
+  },
+
   metaSection: {
     paddingHorizontal: 12,
     paddingVertical: 8,
@@ -85,5 +90,10 @@ export const selectedVideoStyle = StyleSheet.create({
     color: "#fff",
     fontSize: 13,
     fontWeight: "600",
+  },
+  descriptionText: {
+    fontSize: 14,
+    lineHeight: 20,
+    textAlign: "justify",
   },
 });

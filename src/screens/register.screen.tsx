@@ -7,6 +7,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
@@ -14,6 +15,8 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../types/navigation";
 
 import { registerStyles } from "../styles/register.styles";
+
+import { crearUsuario } from "../services/user.service";
 
 type RegisterScreenNavigationProp = StackNavigationProp<RootStackParamList, "Register">;
 
@@ -23,20 +26,27 @@ const RegisterScreen = () => {
 
   const [apellidos, setApellidos] = useState("");
   const [nombres, setNombres] = useState("");
-  const [email, setEmail] = useState("");
+  const [correoElectronico, setcorreoElectronico] = useState("");
   const [telefono, setTelefono] = useState("");
-  const [password, setPassword] = useState("");
+  const [contraseña, setcontraseña] = useState("");
 
   const [confirm, setConfirm] = useState("");
-  const [passwordVisible, setPasswordVisible] = useState(false);
-  const [rePasswordVisible, setRePasswordVisible] = useState(false);
+  const [contraseñaVisible, setcontraseñaVisible] = useState(false);
+  const [recontraseñaVisible, setRecontraseñaVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleRegister = () => {
-    const error = validateRegister(apellidos, nombres, email, telefono, password, confirm);
+  const handleRegister = async () => {
+    const error = validateRegister(nombres, correoElectronico, contraseña, confirm);
     if (error) {
       setErrorMessage(error);
       return;
+    }
+    const result = await crearUsuario({ nombres, apellidos, correoElectronico, telefono, contraseña });
+
+    if (result.success) {
+      Alert.alert("Éxito", result.message);
+    } else {
+      Alert.alert("Error", result.message);
     }
   };
 
@@ -65,8 +75,8 @@ const RegisterScreen = () => {
         style={[registerStyles.input, { color: theme.textInverse }]}
         placeholder="Correo electrónico"
         placeholderTextColor="#999"
-        value={email}
-        onChangeText={setEmail}
+        value={correoElectronico}
+        onChangeText={setcorreoElectronico}
         keyboardType="email-address"
       />
       <TextInput
@@ -83,13 +93,13 @@ const RegisterScreen = () => {
           style={[registerStyles.passwordInput, { color: theme.textInverse }]}
           placeholder="Ingresa tu contraseña"
           placeholderTextColor="#999"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry={!passwordVisible}
+          value={contraseña}
+          onChangeText={setcontraseña}
+          secureTextEntry={!contraseñaVisible}
         />
-        <TouchableOpacity onPress={() => setPasswordVisible(!passwordVisible)}>
+        <TouchableOpacity onPress={() => setcontraseñaVisible(!contraseñaVisible)}>
           <Text style={{ color: theme.primary }}>
-            {passwordVisible ? "🙈" : "👁️"}
+            {contraseñaVisible ? "🙈" : "👁️"}
           </Text>
         </TouchableOpacity>
       </View>
@@ -101,11 +111,11 @@ const RegisterScreen = () => {
           placeholderTextColor="#999"
           value={confirm}
           onChangeText={setConfirm}
-          secureTextEntry={!rePasswordVisible}
+          secureTextEntry={!recontraseñaVisible}
         />
-        <TouchableOpacity onPress={() => setRePasswordVisible(!rePasswordVisible)}>
+        <TouchableOpacity onPress={() => setRecontraseñaVisible(!recontraseñaVisible)}>
           <Text style={{ color: theme.primary }}>
-            {rePasswordVisible ? "🙈" : "👁️"}
+            {recontraseñaVisible ? "🙈" : "👁️"}
           </Text>
         </TouchableOpacity>
       </View>

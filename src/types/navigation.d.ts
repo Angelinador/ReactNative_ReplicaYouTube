@@ -8,7 +8,7 @@ import { Video } from "./video.interface";
 export type RootStackParamList = {
   Login: undefined;
   Register: undefined;
-  Test: undefined
-  Home: undefined
+  Test: undefined;
+  Home: undefined;
   SelectedVideo: Video;   // screen que recibira un objeto Video
 };

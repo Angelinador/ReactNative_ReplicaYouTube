@@ -35,7 +35,7 @@ const LoginScreen = () => {
     if (!error) {
       try {
         await login(email, password);
-        navigation.navigate("Home"); 
+        navigation.navigate("Home");
       } catch (e: any) {
         setErrorMessage(e.message);
       }

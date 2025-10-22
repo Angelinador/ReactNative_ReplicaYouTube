@@ -1,40 +1,47 @@
 import React from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
-import { Video } from "../types/video.interface";
-
+import { VideoInterface } from "../types/video.interface";
 import { videoStyles } from "../styles/video.style";
 import { useTheme } from "../contexts/theme.context";
 
-const VideoCard: React.FC<Video> = ({
-    id,
-    imagenVideo,
-    imagenCanal,
-    tituloVideo,
-    nombreCanal,
-    vistasVideo,
-    fechaSubida,
-    onPress, }) => {
+const VideoCard: React.FC<VideoInterface> = ({
+    titulo,
+    canal,
+    miniatura,
+    vistas,
+    canalImagen,
+    publicado,
+    onPress,
+}) => {
+    const { theme } = useTheme();
 
-    const { theme } = useTheme()
     return (
-        <TouchableOpacity onPress={onPress} style={videoStyles.container}>
+        <TouchableOpacity
+            onPress={onPress}
+            style={[videoStyles.container, { backgroundColor: theme.background }]}
+            activeOpacity={0.8}
+        >
+            {/* Miniatura del video */}
+            <Image source={{ uri: miniatura }} style={videoStyles.miniatura} />
 
-            <Image
-                source={{ uri: imagenVideo }}
-                style={videoStyles.imagenVideo}
-            />
-
-            <View style={videoStyles.infoContenedor}>
+            {/* Información del video */}
+            <View style={videoStyles.infoContainer}>
                 <Image
-                    source={{ uri: imagenCanal }}
+                    source={{ uri: canalImagen }}
                     style={[videoStyles.canalImagen, { backgroundColor: theme.text }]}
                 />
-                <View style={videoStyles.metaContenedor}>
-                    <Text style={[videoStyles.titulo, { color: theme.text }]}>
-                        {tituloVideo}
+                <View style={videoStyles.textContainer}>
+                    <Text
+                        numberOfLines={2}
+                        style={[videoStyles.titulo, { color: theme.text }]}
+                    >
+                        {titulo}
                     </Text>
-                    <Text style={[videoStyles.metadatos, { color: theme.subtitle }]}>
-                        {nombreCanal} • {vistasVideo} views • {fechaSubida}
+                    <Text
+                        numberOfLines={1}
+                        style={[videoStyles.metadatos, { color: theme.subtitle }]}
+                    >
+                        {canal} • {vistas} vistas • {publicado}
                     </Text>
                 </View>
             </View>

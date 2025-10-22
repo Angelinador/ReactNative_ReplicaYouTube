@@ -1,10 +1,13 @@
-export interface Video {
+export interface VideoInterface {
     id: string;
-    imagenVideo: string;
-    imagenCanal: string;
-    tituloVideo: string;
-    nombreCanal: string;
-    vistasVideo: number;
-    fechaSubida: string;
+    titulo: string;
+    descripcion: string;
+    canal: string;
+    miniatura: string;
+    vistas: string;
+    likes: string;
+    duracion: string;
+    canalImagen: string,
+    publicado: string,
     onPress?: () => void;
 }

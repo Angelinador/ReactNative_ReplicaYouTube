@@ -2,39 +2,35 @@ import { StyleSheet } from "react-native";
 
 export const videoStyles = StyleSheet.create({
     container: {
-        flex: 1,
-        flexDirection: "column",
-        marginBottom: 16,
-        gap: 8
-    },
-    imagenVideo: {
         width: "100%",
-        aspectRatio: 5 / 3,
-        backgroundColor: "#e8e8e8ff",
-        resizeMode: "stretch"
+        overflow: "hidden",
+        marginBottom: 20,
     },
-    infoContenedor: {
+    miniatura: {
+        width: "100%",
+        height: 200,
+        resizeMode: "cover",
+    },
+    infoContainer: {
         flexDirection: "row",
-        alignItems: "center",
-        paddingHorizontal: 8,
-        gap: 10
+        alignItems: "flex-start",
+        padding: 10,
+        gap: 10,
     },
     canalImagen: {
-        width: 40,
-        height: 40,
-        borderRadius: 50,
+        width: 42,
+        height: 42,
     },
-    metaContenedor: {
+    textContainer: {
         flex: 1,
-        flexDirection: "column",
-        alignItems: "flex-start",
-        gap: 2,
+        flexShrink: 1,
     },
     titulo: {
-        fontSize: 18,
-        fontWeight: "700",
+        fontSize: 16,
+        fontWeight: "600",
+        marginBottom: 3,
     },
     metadatos: {
-        fontSize: 14,
+        fontSize: 13,
     },
-})
+});

@@ -13,37 +13,30 @@ export const validatePasswordSpecialChar = (password: string): boolean => {
 };
 
 export const validatePasswordEmpty = (password: string): boolean => {
-  return password.length!=0 ? true : false;
+  return password.length != 0 ? true : false;
 };
 
+
 export const validateRegister = (
-  apellidos: string,
-  nombres: string,
+  nombres: string, 
   email: string,
-  telefono: string,
   password: string,
   confirm: string
 ): string | null => {
-  if (!apellidos.trim()) {
-    return "ingresa tus apellidos";
-  }
   if (!nombres.trim()) {
-    return "ingresa tus nombres";
+    return "Ingresa tus nombres";
   }
   if (!validateEmail(email)) {
-    return "ingresa un correo valido";
-  }
-  if (!telefono.trim() || telefono.length < 10) {
-    return "ingresa un numero de telefono valido";
+    return "Ingresa un correo valido";
   }
   if (!validatePasswordLength(password)) {
-    return "la contrasña debe tener al menos 8 caracteres";
+    return "La contrasña debe tener al menos 8 caracteres";
   }
   if (!validatePasswordSpecialChar(password)) {
-    return "la contraseña debe incluir un caracter especial";
+    return "La contraseña debe incluir un caracter especial";
   }
   if (password !== confirm) {
-    return "las contraseñas no coinciden";
+    return "Las contraseñas no coinciden";
   }
   return null;
 };
@@ -59,5 +52,5 @@ export const validateLogin = (
   if (!validatePasswordEmpty(password)) {
     return "la contraseña no puede estar vacia";
   }
-  return null; 
+  return null;
 };

@@ -1,8 +1,7 @@
 import React from "react";
 import { View, FlatList } from "react-native";
 import VideoCard from "./videoCard.component";
-import { Video } from "../types/video.interface";
-import ListFilterButtons from "./listFilterButtons.component";
+import { VideoInterface } from "../types/video.interface";
 
 import { homeScreenStyles as styles } from "../styles/home.styles";
 
@@ -11,11 +10,10 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../types/navigation";
 
 interface ListVideosCardsProps {
-  videos: Video[];
-  filtros?: string[];
+  videos: VideoInterface[];
 }
 // obtiene la lista de videos de el screen "Home" para formar un scroll de videos
-const ListVideosCards: React.FC<ListVideosCardsProps> = ({ videos, filtros = [] }) => {
+const ListVideosCards: React.FC<ListVideosCardsProps> = ({ videos }) => {
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
@@ -33,19 +31,19 @@ const ListVideosCards: React.FC<ListVideosCardsProps> = ({ videos, filtros = [] 
             onPress={() =>
               navigation.navigate("SelectedVideo", {
                 id: item.id,
-                imagenVideo: item.imagenVideo,
-                imagenCanal: item.imagenCanal,
-                tituloVideo: item.tituloVideo,
-                nombreCanal: item.nombreCanal,
-                vistasVideo: item.vistasVideo,
-                fechaSubida: item.fechaSubida,
+                titulo: item.titulo,
+                descripcion: item.descripcion,
+                canal: item.canal,
+                miniatura: item.miniatura,
+                vistas: item.vistas,
+                likes: item.likes,
+                duracion: item.duracion,
+                canalImagen: item.canalImagen,
+                publicado: item.publicado,
               })
             }
           />
         )}
-        ListHeaderComponent={
-          filtros.length > 0 ? <ListFilterButtons filters={filtros} /> : null
-        }
       />
 
     </View>
