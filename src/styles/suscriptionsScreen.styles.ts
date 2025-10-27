@@ -46,7 +46,7 @@ export const suscriptionsScreenStyles = StyleSheet.create({
 
     /* SuscriptionScreen */
     SS_generalContainer: {
-        flex:1,
+        flex: 1,
         backgroundColor: "#fff"
     },
     SS_container: {
@@ -60,8 +60,7 @@ export const suscriptionsScreenStyles = StyleSheet.create({
     GH_header: {
         width: "100%",
         flexDirection: "column",
-        paddingTop: 10,
-        gap: 10
+        gap: 6
     },
     GH_container: {
         flexDirection: "row",
@@ -70,26 +69,26 @@ export const suscriptionsScreenStyles = StyleSheet.create({
         paddingHorizontal: 20
     },
     GH_title: {
-        marginLeft: 12,
         fontSize: 18,
         fontWeight: "600",
     },
     GH_userImage: {
-        width: 40,
-        height: 40,
+        width: 36,
+        height: 35,
         borderRadius: 20,
     },
     GH_searchContainer: {
         flexDirection: "row",
         alignItems: "center",
-        paddingHorizontal: 10,
+        paddingHorizontal: 20,
         paddingVertical: 2,
         marginHorizontal: 20,
         backgroundColor: "#eeeeeeff",
-        borderRadius: 30
+        borderRadius: 30,
+        gap: 5
     },
     GH_input: {
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: 500
     }
 });

@@ -5,16 +5,21 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
-import { Video } from "../types/video.interface";
+import { VideoInterface } from "../types/video.interface";
 import { recordScreenStyles as styles } from "../styles/record.styles";
 import { useTheme } from "../contexts/theme.context";
 
-const ShortVideoCard: React.FC<Video> = ({
-  imagenVideo,
-  tituloVideo,
-  nombreCanal,
-  vistasVideo,
-  fechaSubida,
+const ShortVideoCard: React.FC<VideoInterface> = ({
+  id,
+  titulo,
+  descripcion,
+  canal,
+  miniatura,
+  vistas,
+  likes,
+  duracion,
+  canalImagen,
+  publicado,
   onPress,
 }) => {
 
@@ -25,7 +30,7 @@ const ShortVideoCard: React.FC<Video> = ({
       <View style={styles.SVC_container}>
 
         <Image
-          source={{ uri: imagenVideo }}
+          source={{ uri: miniatura }}
           style={styles.SVC_videoContainer}
           resizeMode="cover"
         />
@@ -34,16 +39,16 @@ const ShortVideoCard: React.FC<Video> = ({
         <View style={styles.SVC_textContainer}>
 
           <Text style={[styles.SVC_titleText, { color: theme.text }]} numberOfLines={2}>
-            {tituloVideo}
+            {titulo}
           </Text>
           <Text style={[styles.SVC_metaText, { color: theme.subtitle }]} numberOfLines={2}>
-            {nombreCanal}
+            {canal}
           </Text>
           <Text style={[styles.SVC_metaText, { color: theme.subtitle }]} numberOfLines={2}>
-            {vistasVideo}
+            {vistas}
           </Text>
           <Text style={[styles.SVC_metaText, { color: theme.subtitle }]} numberOfLines={2}>
-            {fechaSubida}
+            {publicado}
           </Text>
 
         </View>

@@ -2,98 +2,67 @@ import { StyleSheet } from "react-native";
 
 export const selectedVideoStyle = StyleSheet.create({
   container: {
-    flex: 1,
+    height: "62%"
   },
-
   videoContainer: {
-    width: "100%",
-    aspectRatio: 8 / 5,
+    height: 234,
     backgroundColor: "#000",
   },
-
-  video: {
-
-    height: "100%"
-  },
-
   metaSection: {
-    paddingHorizontal: 12,
-    paddingVertical: 8,
+    marginTop: 10,
+    paddingHorizontal: 10,
+    gap: 8,
   },
-
-  titleText: {
-    fontSize: 20,
-    fontWeight: "600",
-    marginBottom: 4,
-  },
-
-  subtitleText: {
-    fontSize: 14,
-    fontWeight: "400",
-  },
-
-  tagsText: {
-    color: "#0800ff",
-    fontWeight: "500",
-  },
-
-  actionsContainer: {
+  metaRow: {
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
-    paddingVertical: 10,
-    borderTopWidth: 0.5,
-    borderBottomWidth: 0.5,
-    borderColor: "#777",
+    paddingVertical: 6,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: "rgba(215, 215, 215, 1)",
   },
-
-  actionButton: {
+  metaItem: {
     alignItems: "center",
+    flex: 1,
+  },
+  metaLabel: {
+    fontSize: 13,
+    fontWeight: "500",
+    opacity: 0.8,
+  },
+  metaValue: {
+    fontSize: 14,
+    fontWeight: "600",
+  },
+  titleText: {
+    fontSize: 18,
+    fontWeight: "bold",
   },
 
-  actionText: {
-    fontSize: 12,
-    marginTop: 4,
+  descriptionContainer: {
+    margin: 12
+  },
+  descriptionText: {
+    paddingHorizontal: 12,
+    paddingBottom: 12,
+    lineHeight: 20,
   },
 
-  channelContainer: {
+  channelSection: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 12,
-    gap: 10,
+    paddingHorizontal: 12,
+    paddingBottom: 12
   },
-
-  canalImagen: {
+  channelImage: {
     width: 40,
     height: 40,
     borderRadius: 20,
     marginRight: 10,
   },
-
   channelName: {
-    fontSize: 14,
-    fontWeight: "600",
-  },
-
-  channelSubs: {
-    fontSize: 12,
-  },
-
-  subscribeButton: {
-    backgroundColor: "red",
-    paddingHorizontal: 14,
-    paddingVertical: 6,
-    borderRadius: 4,
-  },
-
-  subscribeText: {
-    color: "#fff",
-    fontSize: 13,
-    fontWeight: "600",
-  },
-  descriptionText: {
-    fontSize: 14,
-    lineHeight: 20,
-    textAlign: "justify",
+    fontSize: 16,
+    fontWeight: "500",
   },
 });

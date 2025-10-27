@@ -1,9 +1,9 @@
 import React, { createContext, useState, useContext, ReactNode, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { crearHistorial } from "../services/record.service";
 
 interface RecordContextProps {
-    idHistorial: string | null;
-    generarId: (latitud: number, longitud: number) => Promise<void>;
+    generarId: () => Promise<void>;
 }
 
 const RecordContext = createContext<RecordContextProps | undefined>(undefined);
@@ -12,28 +12,24 @@ interface RecordProviderProps {
     children: ReactNode;
 }
 
+/*
+    La principal funcion de este contexto es realizar la llamada al service para la 
+    creacion de de las intancias de Historial
+*/
+
 export const RecordProvider = ({ children }: RecordProviderProps) => {
-    const [idHistorial, setIdHistorial] = useState<string | null>(null);
 
-    // Generar el idHistorial
-    const generarId = async (latitud: number, longitud: number) => {
+    // Función que genera el idHistorial
+    const generarId = async () => {
         try {
-            const storedUserId = await AsyncStorage.getItem("idUsuario");
-            if (!storedUserId) throw new Error("No se encontró el idUsuario");
-
-            const nuevoId = `${storedUserId}_${latitud}_${longitud}`;
-            setIdHistorial(nuevoId);
-
-            // Guardarlo en el almacenamiento local
-            await AsyncStorage.setItem("idHistorial", nuevoId);
-
-            console.log("idHistorial generado:", nuevoId);
+            await crearHistorial()
         } catch (error) {
             console.error("Error al generar idHistorial:", error);
         }
     };
+
     return (
-        <RecordContext.Provider value={{ idHistorial, generarId }}>
+        <RecordContext.Provider value={{ generarId }}>
             {children}
         </RecordContext.Provider>
     );

@@ -1,5 +1,6 @@
 {
   "expo": {
+    "scheme": "replica-youtube",
     "name": "replica",
     "slug": "replica",
     "version": "1.0.0",
@@ -26,6 +27,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "fd249193-a901-4e47-bbaa-67dd008a00c0"
+      }
     }
   }
 }

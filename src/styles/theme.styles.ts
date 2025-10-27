@@ -1,19 +1,19 @@
 import { Theme } from "../types/theme.interface";
 
 export const lightTheme: Theme = {
-  background: "#fff",
-  text: "#000",
-  primary: "#1976D2",
-  secondary: "#FF9800",
-  textInverse: "#000000",
-  subtitle: "#676767ff",
+  background: "#F9FAFB",
+  text: "#111827", 
+  primary: "#2563EB",
+  secondary: "#EF4444",
+  textInverse: "#000000ff",
+  subtitle: "#6B7280",
 };
 
 export const darkTheme: Theme = {
-  background: "#222222ff",
-  text: "#fff",
-  primary: "#1976D2",
-  secondary: "#FFB74D",
-  textInverse: "#121212",
-  subtitle: "#919191ff",
+  background: "#0F172A",
+  text: "#F1F5F9", 
+  primary: "#3B82F6", 
+  secondary: "#F87171",
+  textInverse: "#000000ff",
+  subtitle: "#94A3B8",
 };

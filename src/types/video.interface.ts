@@ -6,8 +6,13 @@ export interface VideoInterface {
     miniatura: string;
     vistas: string;
     likes: string;
-    duracion: string;
-    canalImagen: string,
-    publicado: string,
+    duracion?: string;
+    canalImagen: string;
+    ubicacion?: {
+        lat: string;
+        lon: string;
+        radio?: string;
+    };
+    publicado: string;
     onPress?: () => void;
 }

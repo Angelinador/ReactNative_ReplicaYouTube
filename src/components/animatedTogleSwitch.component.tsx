@@ -1,21 +1,33 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Pressable, Animated, StyleSheet } from "react-native";
-
 import { useTheme } from "../contexts/theme.context";
 
 const AnimatedToggleSwitch = () => {
-  const [active, setActive] = useState(false);
-  const offset = useRef(new Animated.Value(0)).current;
-  const { theme, toggleTheme, isDark } = useTheme()
+  const { toggleTheme, isDark } = useTheme();
 
-  const toggle = () => {
-    toggleTheme()
+  // Estado inicial coherente con el tema
+  const [active, setActive] = useState(isDark);
+  const offset = useRef(new Animated.Value(isDark ? 24 : 0)).current;
+
+  // Mantiene sincronizado el estado si cambia el tema externamente
+  useEffect(() => {
     Animated.timing(offset, {
-      toValue: active ? 0 : 24,
+      toValue: isDark ? 24 : 0,
       duration: 200,
       useNativeDriver: false,
     }).start();
-    setActive(!active);
+    setActive(isDark);
+  }, [isDark]);
+
+  const toggle = () => {
+    const newState = !active;
+    toggleTheme();
+    Animated.timing(offset, {
+      toValue: newState ? 24 : 0,
+      duration: 200,
+      useNativeDriver: false,
+    }).start();
+    setActive(newState);
   };
 
   return (
@@ -23,13 +35,18 @@ const AnimatedToggleSwitch = () => {
       onPress={toggle}
       style={[
         styles.switchContainer,
-        { backgroundColor: active ? "#ff0000ff" : "#ffffffff" },
+        {
+          backgroundColor: active ? "#2563EB" : "#E5E7EB",
+        },
       ]}
     >
       <Animated.View
         style={[
           styles.circle,
-          { transform: [{ translateX: offset }] },
+          {
+            transform: [{ translateX: offset }],
+            backgroundColor: active ? "#FFFFFF" : "#111827",
+          },
         ]}
       />
     </Pressable>
@@ -48,7 +65,6 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: "#000",
   },
 });
 

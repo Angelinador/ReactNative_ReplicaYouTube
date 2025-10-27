@@ -4,7 +4,7 @@ export const homeScreenStyles = StyleSheet.create({
     /* HomeScreen */
     HS_generalContainer: {
         flex: 1,
-        paddingTop: 20,
+        paddingTop:"10%",
         gap: 10
     },
     /* HomeHeader */
@@ -21,7 +21,7 @@ export const homeScreenStyles = StyleSheet.create({
         backgroundColor: "#f1f1f1",
         borderRadius: 20,
         marginHorizontal: 10,
-        paddingHorizontal: 10,
+        paddingHorizontal: 20,
         gap: 6
     },
     HH_logo: {

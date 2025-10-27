@@ -6,7 +6,7 @@ import {
     Text,
     TextInput
 } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import { suscriptionsScreenStyles as styles } from "../styles/suscriptionsScreen.styles";
 
 import { useNavigation } from "@react-navigation/native";
@@ -29,7 +29,7 @@ const GeneralHeader = ({ screen, userImage }: GeneralHeaderProps) => {
         <View style={styles.GH_header}>
             <View style={styles.GH_container}>
                 <TouchableOpacity onPress={navigation.goBack}>
-                    <MaterialIcons name="arrow-back" size={28} color={theme.text} />
+                    <Feather name="arrow-left" size={24} color={theme.text} />
                 </TouchableOpacity>
 
                 <Text style={[styles.GH_title, { color: theme.text }]}>{screen}</Text>
@@ -40,14 +40,14 @@ const GeneralHeader = ({ screen, userImage }: GeneralHeaderProps) => {
                 />
             </View>
 
-            <View style={styles.GH_searchContainer}>
-                <MaterialIcons name="search" size={28} color={theme.subtitle} />
+            {/*<View style={styles.GH_searchContainer}>
+                <Feather name="search" size={20} color="black" />
                 <TextInput
                     style={styles.GH_input}
                     placeholder="Buscar"
-                    placeholderTextColor={theme.subtitle}
+                    placeholderTextColor="#888"
                 />
-            </View>
+            </View>*/}
 
         </View>
     );

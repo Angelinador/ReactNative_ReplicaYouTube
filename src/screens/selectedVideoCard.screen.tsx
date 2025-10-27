@@ -1,114 +1,80 @@
 import React, { useState } from "react";
-import { View, Text, Image, TouchableOpacity } from "react-native";
-import { ThumbsUp, ThumbsDown } from "lucide-react-native";
+import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
+import YoutubePlayer from "react-native-youtube-iframe";
 import { useRoute, RouteProp } from "@react-navigation/native";
 import { RootStackParamList } from "../types/navigation";
 import { selectedVideoStyle as styles } from "../styles/selectedVideo.style";
 import { useTheme } from "../contexts/theme.context";
-import { WebView } from "react-native-webview";
 
 type SelectedVideoRouteProp = RouteProp<RootStackParamList, "SelectedVideo">;
 
-const SelectedVideoCard = () => {
+const SelectedVideoCard: React.FC = () => {
     const route = useRoute<SelectedVideoRouteProp>();
     const {
         id,
         titulo,
         descripcion,
         canal,
-        miniatura,
+        canalImagen,
         vistas,
         likes,
-        duracion,
-        canalImagen,
         publicado,
     } = route.params;
 
     const { theme } = useTheme();
-    const [mostrarDescripcion, setMostrarDescripcion] = useState(false);
+    const [playing, setPlaying] = useState(false);
+    type PlayerState = "playing" | "paused" | "ended" | "buffering" | "unstarted";
 
     return (
-        <View style={[styles.container, { backgroundColor: theme.background }]}>
-            {/* 🎬 Video embebido */}
-            <View style={styles.videoContainer}>
-                <WebView
-                    style={{ flex: 1 }}
-                    javaScriptEnabled
-                    domStorageEnabled
-                    allowsFullscreenVideo
-                    scrollEnabled={false}
-                    source={{
-                        html: `
-              <html>
-                <body style="margin:0;padding:0;overflow:hidden;background:black;">
-                  <iframe
-                    width="100%"
-                    height="100%"
-                    src="https://www.youtube.com/embed/${id}"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-                    allowfullscreen
-                  ></iframe>
-                </body>
-              </html>
-            `,
-                    }}
-                />
-            </View>
+        <View style={{ flex: 1, backgroundColor: theme.background }}>
 
-            <TouchableOpacity
-                style={styles.metaSection}
-                activeOpacity={0.8}
-                onPress={() => setMostrarDescripcion((prev) => !prev)} // toggle
-            >
-                <Text style={[styles.titleText, { color: theme.text }]}>{titulo}</Text>
-                <Text style={[styles.subtitleText, { color: theme.subtitle }]}>
-                    {vistas} vistas • {publicado}
-                </Text>
-
-                {mostrarDescripcion && (
-                    <Text
-                        style={[
-                            styles.descriptionText,
-                            { color: theme.subtitle, marginTop: 8 },
-                        ]}
-                    >
-                        {descripcion || "Sin descripción disponible."}
-                    </Text>
-                )}
-            </TouchableOpacity>
-
-
-            <View style={styles.actionsContainer}>
-                <TouchableOpacity style={styles.actionButton}>
-                    <ThumbsUp size={20} color={theme.text} />
-                    <Text style={[styles.actionText, { color: theme.text }]}>
-                        {likes}
-                    </Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity style={styles.actionButton}>
-                    <ThumbsDown size={20} color={theme.text} />
-                    <Text style={[styles.actionText, { color: theme.text }]}>No me gusta</Text>
-                </TouchableOpacity>
-            </View>
-
-            <View style={styles.channelContainer}>
-                <Image
-                    source={{ uri: canalImagen }}
-                    style={[styles.canalImagen, { backgroundColor: theme.text }]}
-                />
-                <View style={{ flex: 1 }}>
-                    <Text style={[styles.channelName, { color: theme.text }]}>{canal}</Text>
-                    <Text style={[styles.channelSubs, { color: theme.subtitle }]}>
-                        289K suscriptores
-                    </Text>
+            <View style={styles.container}>
+                {/* Reproductor de youtube */}
+                <View style={styles.videoContainer}>
+                    <YoutubePlayer
+                        height={300}
+                        play={playing}
+                        videoId={id}
+                        onChangeState={(state: PlayerState) => setPlaying(state === "playing")}
+                    />
                 </View>
-                <TouchableOpacity style={styles.subscribeButton}>
-                    <Text style={styles.subscribeText}>Suscribirse</Text>
-                </TouchableOpacity>
+
+                <View style={styles.metaSection}>
+                    <Text style={[styles.titleText, { color: theme.text }]}>{titulo}</Text>
+                    <View style={styles.metaRow}>
+                        {[
+                            { label: "Vistas", value: vistas },
+                            { label: "Publicado", value: publicado },
+                            { label: "Me gusta", value: likes },
+                        ].map((item, index) => (
+                            <View key={index} style={styles.metaItem}>
+                                <Text style={[styles.metaLabel, { color: theme.subtitle }]}>
+                                    {item.label}
+                                </Text>
+                                <Text style={[styles.metaValue, { color: theme.text }]}>
+                                    {item.value}
+                                </Text>
+                            </View>
+                        ))}
+                    </View>
+                </View>
+
+                <View style={[styles.descriptionContainer, { height: descripcion ? "20%" : 0 }]}>
+                    <ScrollView
+                        showsVerticalScrollIndicator={false}
+                    >
+                        <Text style={[styles.descriptionText, { color: theme.subtitle }]}>
+                            {descripcion || "Sin descripción disponible."}
+                        </Text>
+                    </ScrollView>
+                </View>
+
+                <View style={styles.channelSection}>
+                    <Image source={{ uri: canalImagen }} style={styles.channelImage} />
+                    <Text style={[styles.channelName, { color: theme.text }]}>{canal}</Text>
+                </View>
             </View>
-        </View>
+        </View >
     );
 };
 

@@ -8,17 +8,20 @@ export const recordScreenStyles = StyleSheet.create({
     },
     RS_container: {
         flex: 1,
-        marginTop: 20,
-        gap: 20,
-        alignItems: "center"
+        marginTop: "10%",
+        gap: 10,
+        alignItems: "center",
     },
     /* ListRecordVideos */
     LRV_container: {
+        flex: 1,
         width: "94%",
-        borderRadius: 10,
-        borderWidth: 1,
-        padding: 14,
-        height: "auto",
+        /*borderTopRightRadius: 10,
+        borderTopLeftRadius: 10,
+        borderTopWidth: 1,
+        borderLeftWidth: 1,
+        borderRightWidth: 1,
+        padding: 14,*/
     },
     LRV_dateText: {
         fontSize: 18,

@@ -7,6 +7,7 @@ import {
   TextInput,
   TouchableOpacity,
   Pressable,
+  Alert,
 } from "react-native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../types/navigation";
@@ -14,6 +15,9 @@ import { RootStackParamList } from "../types/navigation";
 import { useNavigation } from "@react-navigation/native";
 import { useTheme } from "../contexts/theme.context";
 import { useAuth } from "../contexts/auth.context";
+
+import { useGoogleAuth } from "../services/googleAuth.service";
+import axios from "axios";
 
 type LoginScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -44,6 +48,21 @@ const LoginScreen = () => {
     }
   };
 
+  const handleLoginBackend = async (googleToken: string) => {
+    try {
+      const response = await axios.post(
+        "https://integracion.test-drive.org/api/auth/google",
+        { token: googleToken }
+      );
+      const { jwt } = response.data;
+      Alert.alert("Inicio de sesión exitoso", `Token interno: ${jwt}`);
+    } catch (error: any) {
+      Alert.alert("Error", "No se pudo iniciar sesión con Google");
+    }
+  };
+
+  const { promptAsync } = useGoogleAuth(handleLoginBackend);
+
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
       {/* mensaje de bienvenida */}
@@ -61,7 +80,7 @@ const LoginScreen = () => {
       <TextInput
         placeholder="nombre@email.com"
         placeholderTextColor={theme.subtitle}
-        style={[styles.input, { color: theme.text }]}
+        style={[styles.input, { color: theme.textInverse }]}
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
@@ -75,7 +94,7 @@ const LoginScreen = () => {
           placeholder="Ingresa tu contraseña"
           placeholderTextColor={theme.subtitle}
           secureTextEntry={!passwordVisible}
-          style={[styles.passwordInput, { color: theme.text }]}
+          style={[styles.passwordInput, { color: theme.textInverse }]}
           value={password}
           onChangeText={setPassword}
         />
@@ -96,12 +115,11 @@ const LoginScreen = () => {
         <Text style={[styles.error, { marginTop: 10 }]}>{errorMessage}</Text>
       ) : null}
 
-      {/* contraseña olvidada */}
-      <TouchableOpacity>
+      {/*<TouchableOpacity>
         <Text style={[styles.forgotText, { color: theme.primary }]}>
           ¿Olvidaste tu contraseña?
         </Text>
-      </TouchableOpacity>
+      </TouchableOpacity>*/}
 
       {/* boton para iniciar */}
       <TouchableOpacity
@@ -126,7 +144,7 @@ const LoginScreen = () => {
       </View>
 
       {/* boton de google */}
-      <Pressable style={styles.buttonGoogle}>
+      <Pressable style={styles.buttonGoogle} onPress={() => promptAsync()}>
         <Text style={styles.buttonText}>Continuar con Google</Text>
       </Pressable>
 

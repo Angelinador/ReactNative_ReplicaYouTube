@@ -28,7 +28,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
             setToken(data.token);
             await AsyncStorage.setItem("token", data.token); // almacenamiento local del token (AsyncStorage)
-
+            
+            // al hacer login se guarda el idUsusario para futuras peticiones 
             await AsyncStorage.setItem("idUsuario", data.usuario.idUsuario.toString());
             // Configura el token para futuras peticiones HTTP
             axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`; // <-----------------

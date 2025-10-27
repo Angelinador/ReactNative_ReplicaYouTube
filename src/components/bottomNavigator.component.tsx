@@ -1,10 +1,10 @@
 import React from "react";
-import { View, Text } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { MaterialIcons } from "@expo/vector-icons"; // libreria de icono en expo
+import { MaterialIcons } from "@expo/vector-icons";
 import HomeScreen from "../screens/home.screen";
 import RecordScreen from "../screens/record.screen";
 import SettingsScreen from "../screens/settings.screen";
+import LocationScreen from "../screens/location.screen";
 
 import { useTheme } from "../contexts/theme.context";
 
@@ -19,11 +19,6 @@ const Tab = createBottomTabNavigator();
 */
 
 export default function BottomNavigator() {
-  const EmptyScreen = () => (
-    <View style={{ flex: 1, backgroundColor: "#fff", justifyContent: "center", alignItems: "center" }}>
-      <Text>Pantalla vacía</Text>
-    </View>
-  );
   const { isDark } = useTheme()
   return (
     <Tab.Navigator
@@ -33,7 +28,7 @@ export default function BottomNavigator() {
         tabBarActiveTintColor: isDark ? "#ffffffff" : "#000",
         tabBarInactiveTintColor: isDark ? "#979797ff" : "#5c5c5cff",
         tabBarStyle: {
-          height: 60,
+          height: "12%",
           backgroundColor: isDark ? "#434343ff" : "#fff",
         },
         tabBarIcon: ({ color, size = 30 }) => {
@@ -53,7 +48,7 @@ export default function BottomNavigator() {
     >
       <Tab.Screen name="Principal" component={HomeScreen} />
       <Tab.Screen name="Historial" component={RecordScreen} />
-      <Tab.Screen name="Ubicacion" component={EmptyScreen} />
+      <Tab.Screen name="Ubicacion" component={LocationScreen} />
       <Tab.Screen name="Configuracion" component={SettingsScreen} />
     </Tab.Navigator >
   );
